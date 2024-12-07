@@ -1,3 +1,8 @@
 export default function HomePage() {
-  return <h1>Next JS v15.0.4 from Scratch</h1>;
+  return (
+    <>
+      <h1>Indie Gamer</h1>
+      <p>Only the best indie games, reviewed for you.</p>
+    </>
+  );
 }
