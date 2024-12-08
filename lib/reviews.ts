@@ -17,7 +17,7 @@ export async function getReviews() {
   const slugs = files
     .filter((file) => file.endsWith('.md'))
     .map((file) => file.slice(0, -'.md'.length));
-  console.log('slugs: ', slugs);
+
   const reviews = [];
   for (const slug of slugs) {
     const review = await getReview(slug);
