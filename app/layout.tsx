@@ -3,38 +3,48 @@ import { ReactNode } from 'react';
 import './globals.css';
 import NavBar from '@/components/NavBar';
 import { exo2, orbitron } from './fonts';
+import { getFeaturedReview } from '@/lib/reviews';
 
-export const metadata = {
-  title: {
-    default: 'Indie Gamer',
-    template: '%s | Indie Gamer',
-  },
-  description: 'Only the best indie games, reviewed for you.',
-  generator: 'Next.js',
-  authors: [{ name: 'Andrew Lobban', url: 'http://iamandrewlobban.com' }],
-  creator: 'Andrew Lobban',
-  openGraph: {
-    title: 'Indie Gamer',
-    description: 'Indie Game Reviews',
-    keywords: [''],
-    url: 'http://localhost:3000',
-    siteName: 'Indie Gamer',
-    images: [
-      {
-        url: 'http://localhost:3000/images/stardew-valley.jpg',
-        width: 800,
-        height: 600,
-      },
-      {
-        url: 'http://localhost:3000/images/stardew-valley.jpg',
-        width: 1280,
-        height: 720,
-      },
-    ],
-    locale: 'en-US',
-    type: 'website',
-  },
-};
+export async function generateMetadata() {
+  const review = await getFeaturedReview();
+  const domain = process.env.NEXT_PUBLIC_VERCEL_URL;
+  console.log(
+    '[layout] domain ',
+    process.env.NEXT_PUBLIC_VERCEL_URL,
+    review.image
+  );
+  return {
+    title: {
+      default: 'Indie Gamer',
+      template: '%s | Indie Gamer',
+    },
+    description: 'Only the best indie games, reviewed for you.',
+    generator: 'Next.js',
+    authors: [{ name: 'Andrew Lobban', url: 'http://iamandrewlobban.com' }],
+    creator: 'Andrew Lobban',
+    openGraph: {
+      title: 'Indie Gamer',
+      description: 'Indie Game Reviews',
+      keywords: [''],
+      url: { domain },
+      siteName: 'Indie Gamer',
+      images: [
+        {
+          url: `${domain}${review.image}`,
+          width: 800,
+          height: 600,
+        },
+        {
+          url: `${domain}${review.image}`,
+          width: 1280,
+          height: 720,
+        },
+      ],
+      locale: 'en-US',
+      type: 'website',
+    },
+  };
+}
 
 interface LayoutProps {
   children: ReactNode;
