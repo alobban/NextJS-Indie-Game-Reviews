@@ -10,6 +10,11 @@ export interface Review {
   body: string;
 }
 
+export async function getFeaturedReview(): Promise<Review> {
+  const reviews: Review[] = await getReviews();
+  return reviews[0];
+}
+
 export async function getReview(slug): Promise<Review> {
   const text = await readFile(`./content/reviews/${slug}.md`, 'utf8');
   const {
@@ -22,11 +27,12 @@ export async function getReview(slug): Promise<Review> {
 
 export async function getReviews(): Promise<Review[]> {
   const slugs = await getSlugs();
-  const reviews = [];
+  const reviews: Review[] = [];
   for (const slug of slugs) {
     const review = await getReview(slug);
     reviews.push(review);
   }
+  reviews.sort((a, b) => b.date.localeCompare(a.date));
   return reviews;
 }
 
