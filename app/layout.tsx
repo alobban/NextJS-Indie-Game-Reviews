@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
+import './globals.css';
+
 interface LayoutProps {
   children: ReactNode;
 }
@@ -25,7 +27,12 @@ export default function RootLayout({ children }: LayoutProps) {
           </nav>
         </header>
         <main>{children}</main>
-        <footer>[footer]</footer>
+        <footer>
+          Game data & images provided by{' '}
+          <a href="http://rawg.io/" target="_blank">
+            RAWG
+          </a>
+        </footer>
       </body>
     </html>
   );
