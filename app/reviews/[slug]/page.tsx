@@ -9,6 +9,14 @@ interface ReviewPageProps {
   params: Promise<ReviewPageParams>;
 }
 
+export async function generateMetadata({ params }: ReviewPageProps) {
+  const { slug } = await params;
+  const review = await getReview(slug);
+  return {
+    title: review.title,
+  };
+}
+
 export async function generateStaticParams(): Promise<ReviewPageParams[]> {
   const slugs = await getSlugs();
   return slugs.map((slug) => ({ slug }));
