@@ -1,6 +1,6 @@
 export const getDomain = () => {
   // Check if running in a Vercel environment
-  const vercelUrl = process.env.VERCEL_URL;
+  const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
 
   // Build the full URL, defaulting to localhost for local development
   const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
