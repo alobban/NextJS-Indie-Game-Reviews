@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Heading from '@/components/Heading';
 import ShareLinkButton from '@/components/ShareLinkButton';
 import { getReview, getSlugs } from '@/lib/reviews';
@@ -31,12 +32,14 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
   return (
     <>
       <Heading>{review.title}</Heading>
+      <p className="font-semibold pb-3">{review.subtitle}</p>
       <div className="flex gap-3 items-baseline">
         <p className="italic pb-2">{review.date}</p>
         <ShareLinkButton />
       </div>
-      <img
+      <Image
         src={review.image}
+        priority
         alt=""
         width={640}
         height={360}
