@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: ReviewPageProps) {
 
 export async function generateStaticParams(): Promise<ReviewPageParams[]> {
   const slugs = await getSlugs();
+  console.log('[ReviewPage] generateStaticParams', slugs);
   return slugs.map((slug) => ({ slug }));
 }
 
