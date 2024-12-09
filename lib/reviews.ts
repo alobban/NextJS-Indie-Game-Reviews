@@ -1,6 +1,8 @@
 import { marked } from 'marked';
 import qs from 'qs';
 
+export const CACHE_TAG_REVIEWS = 'reviews';
+
 const CMS_URL = 'http://localhost:1337';
 
 interface CmsItem {
@@ -56,7 +58,7 @@ async function fetchReviews(parameters): Promise<{ data: CmsItem[] }> {
     qs.stringify(parameters, { encodeValuesOnly: true });
   const response = await fetch(url, {
     next: {
-      revalidate: 30, // seconds
+      tags: [CACHE_TAG_REVIEWS],
     },
   });
   if (!response.ok) {
