@@ -12,6 +12,12 @@ interface ReviewPageProps {
   params: Promise<ReviewPageParams>;
 }
 
+export async function generateStaticParams(): Promise<ReviewPageParams[]> {
+  const slugs = await getSlugs();
+  console.log('[ReviewPage] generateStaticParams', slugs);
+  return slugs.map((slug) => ({ slug }));
+}
+
 export async function generateMetadata({ params }: ReviewPageProps) {
   const { slug } = await params;
   const review = await getReview(slug);
@@ -23,14 +29,9 @@ export async function generateMetadata({ params }: ReviewPageProps) {
   };
 }
 
-export async function generateStaticParams(): Promise<ReviewPageParams[]> {
-  const slugs = await getSlugs();
-  console.log('[ReviewPage] generateStaticParams', slugs);
-  return slugs.map((slug) => ({ slug }));
-}
-
 export default async function ReviewPage({ params }: ReviewPageProps) {
   const { slug } = await params;
+  console.log('[ReviewPage] rendering:', slug);
   const review = await getReview(slug);
   if (!review) {
     notFound();
