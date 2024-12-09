@@ -9,9 +9,6 @@ import { getDomain } from '@/lib/getDomain';
 export async function generateMetadata() {
   const review = await getFeaturedReview();
   const domain = getDomain();
-  console.log('[layout] VERCEL_URL', process.env.VERCEL_URL);
-  console.log('[layout] domain ', domain);
-  console.log('[layout] image ', review.image);
 
   return {
     title: {
