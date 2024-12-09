@@ -4,15 +4,15 @@ import './globals.css';
 import NavBar from '@/components/NavBar';
 import { exo2, orbitron } from './fonts';
 import { getFeaturedReview } from '@/lib/reviews';
+import { getDomain } from '@/lib/getDomain';
 
 export async function generateMetadata() {
   const review = await getFeaturedReview();
-  const domain = process.env.NEXT_PUBLIC_VERCEL_URL;
-  console.log(
-    '[layout] domain ',
-    process.env.NEXT_PUBLIC_VERCEL_URL,
-    review.image
-  );
+  const domain = getDomain();
+  console.log('[layout] VERCEL_URL', process.env.VERCEL_URL);
+  console.log('[layout] domain ', domain);
+  console.log('[layout] image ', review.image);
+
   return {
     title: {
       default: 'Indie Gamer',
@@ -26,7 +26,7 @@ export async function generateMetadata() {
       title: 'Indie Gamer',
       description: 'Indie Game Reviews',
       keywords: [''],
-      url: { domain },
+      url: `${domain}`,
       siteName: 'Indie Gamer',
       images: [
         {
