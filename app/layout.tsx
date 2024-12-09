@@ -20,7 +20,16 @@ export async function generateMetadata() {
     },
     description: 'Only the best indie games, reviewed for you.',
     generator: 'Next.js',
-    authors: [{ name: 'Andrew Lobban', url: 'http://iamandrewlobban.com' }],
+    authors: [
+      {
+        name: 'Andrew Lobban',
+        url: `${process.env.VERCEL_PROJECT_PRODUCTION_URL}`,
+      },
+      {
+        name: 'Andrew G Lobban',
+        url: `${process.env.VERCEL_URL}`,
+      },
+    ],
     creator: 'Andrew Lobban',
     openGraph: {
       title: 'Indie Gamer',
