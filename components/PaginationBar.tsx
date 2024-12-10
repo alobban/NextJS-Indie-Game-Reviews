@@ -1,7 +1,24 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 
-export default function PaginationBar({ href, page, pageCount }) {
+interface PaginationBarProps {
+  href: string;
+  page: number;
+  pageCount: number;
+}
+
+interface PaginationLinkProps {
+  children: ReactNode;
+  href: string;
+  enabled: boolean;
+}
+
+export default function PaginationBar({
+  href,
+  page,
+  pageCount,
+}: PaginationBarProps): ReactNode {
   return (
     <div className="flex gap-2 pb-3">
       <PaginationLink href={`${href}?page=${page - 1}`} enabled={page > 1}>
@@ -22,7 +39,11 @@ export default function PaginationBar({ href, page, pageCount }) {
   );
 }
 
-function PaginationLink({ children, href, enabled }) {
+function PaginationLink({
+  children,
+  href,
+  enabled,
+}: PaginationLinkProps): ReactNode {
   if (!enabled) {
     return (
       <span className="border cursor-not-allowed rounded text-slate-300 text-sm">
