@@ -6,11 +6,15 @@ import { exo2, orbitron } from './fonts';
 import { getReviews } from '@/lib/reviews';
 import { getDomain } from '@/lib/getDomain';
 
+const CMS_URL = process.env.CMS_URL;
+
 export async function generateMetadata() {
   const {
     reviews: [review],
   } = await getReviews(1);
   const domain = getDomain();
+  const imageUrl = new URL(review.image, CMS_URL).href;
+  console.log('[Layout] imageUrl:', imageUrl);
 
   return {
     title: {
@@ -38,12 +42,12 @@ export async function generateMetadata() {
       siteName: 'Indie Gamer',
       images: [
         {
-          url: `${domain}${review.image}`,
+          url: `${imageUrl}`,
           width: 800,
           height: 600,
         },
         {
-          url: `${domain}${review.image}`,
+          url: `${imageUrl}`,
           width: 1280,
           height: 720,
         },
