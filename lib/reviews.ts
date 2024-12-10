@@ -68,7 +68,7 @@ export async function getReviews(
   };
 }
 
-async function fetchReviews(parameters): Promise<CmsItem > {
+async function fetchReviews(parameters): Promise<CmsItem> {
   const url =
     `${CMS_URL}/api/reviews?` +
     qs.stringify(parameters, { encodeValuesOnly: true });
@@ -102,4 +102,19 @@ export async function getSlugs(): Promise<string[]> {
     pagination: { pageSize: 100 },
   });
   return data.map((item) => item.attributes.slug);
+}
+
+export async function searchReviews(
+  query
+): Promise<{ title: string; slug: string }[]> {
+  const { data } = await fetchReviews({
+    filters: { title: { $containsi: query } },
+    fields: ['slug', 'title'],
+    sort: ['title'],
+    pagination: { pageSize: 5 },
+  });
+  return data.map(({ attributes }) => ({
+    slug: attributes.slug,
+    title: attributes.title,
+  }));
 }
