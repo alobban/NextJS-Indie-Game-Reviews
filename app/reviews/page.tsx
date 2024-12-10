@@ -2,21 +2,34 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Heading from '@/components/Heading';
 import { getReviews } from '@/lib/reviews';
+import PaginationBar from '@/components/PaginationBar';
 
 export const metadata = {
   title: 'Reviews',
 };
 
-export default async function ReviewsPage() {
-  const reviews = await getReviews(6);
-  console.log(
-    '[ReviewsPage] rendering:',
-    reviews.map((review) => review.slug).join(', ')
-  );
+const PAGE_SIZE = 6;
+
+function parsePageParam(paramValue) {
+  if (paramValue) {
+    const page = parseInt(paramValue);
+    if (isFinite(page) && page > 0) {
+      return page;
+    }
+  }
+  return 1;
+}
+
+export default async function ReviewsPage({ searchParams }) {
+  const { page } = await searchParams;
+  const pageNum = parsePageParam(page);
+  const { reviews, pageCount } = await getReviews(PAGE_SIZE, pageNum);
+  console.log('[ReviewsPage] rendering:', page);
 
   return (
     <>
       <Heading>Reviews</Heading>
+      <PaginationBar href="/reviews" page={pageNum} pageCount={pageCount} />
       <ul className="flex flex-row flex-wrap gap-3">
         {reviews.map((review, index) => (
           <li

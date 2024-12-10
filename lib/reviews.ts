@@ -6,8 +6,13 @@ export const CACHE_TAG_REVIEWS = 'reviews';
 const CMS_URL = 'http://localhost:1337';
 
 interface CmsItem {
-  id: number;
-  attributes: any;
+  data: {
+    id: number;
+    attributes: any;
+  }[];
+  meta: {
+    pagination: any;
+  };
 }
 
 export interface Review {
@@ -20,6 +25,11 @@ export interface Review {
 
 export interface FullReview extends Review {
   body: string;
+}
+
+export interface PagedReview {
+  pageCount: number;
+  reviews: Review[];
 }
 
 export async function getReview(slug: string): Promise<FullReview> {
@@ -39,20 +49,26 @@ export async function getReview(slug: string): Promise<FullReview> {
   };
 }
 
-export async function getReviews(pageSize: number): Promise<Review[]> {
-  const { data } = await fetchReviews({
+export async function getReviews(
+  pageSize: number,
+  page: number = 1
+): Promise<PagedReview> {
+  const { data, meta } = await fetchReviews({
     fields: ['slug', 'title', 'subtitle', 'publishedAt'],
     populate: { image: { fields: ['url'] } },
     sort: ['publishedAt:desc'],
-    pagination: { pageSize },
+    pagination: { pageSize, page },
   });
   if (data.length === 0) {
     return null;
   }
-  return data.map(toReview);
+  return {
+    pageCount: meta.pagination.pageCount,
+    reviews: data.map(toReview),
+  };
 }
 
-async function fetchReviews(parameters): Promise<{ data: CmsItem[] }> {
+async function fetchReviews(parameters): Promise<CmsItem > {
   const url =
     `${CMS_URL}/api/reviews?` +
     qs.stringify(parameters, { encodeValuesOnly: true });

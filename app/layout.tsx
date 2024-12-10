@@ -7,7 +7,9 @@ import { getReviews } from '@/lib/reviews';
 import { getDomain } from '@/lib/getDomain';
 
 export async function generateMetadata() {
-  const [review] = await getReviews(1);
+  const {
+    reviews: [review],
+  } = await getReviews(1);
   const domain = getDomain();
 
   return {
