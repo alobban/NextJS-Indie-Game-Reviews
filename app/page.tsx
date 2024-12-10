@@ -12,8 +12,14 @@ export default async function HomePage() {
 
   return (
     <>
-      <Heading>Indie Gamer</Heading>
-      <p>Only the best indie games, reviewed for you.</p>
+      <Heading>Indie World</Heading>
+      <div className="flex flex-col gap-1 mb-4">
+        <p>Only the best indie games, reviewed for you.</p>
+        <p>
+          This is a demo website built with Responsive Web Design running{' '}
+          <strong>NextJS 15.0.4</strong>.
+        </p>
+      </div>
       <ul className="flex flex-col gap-3">
         {reviews.map((review, index) => (
           <li
