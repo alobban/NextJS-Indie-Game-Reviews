@@ -71,14 +71,28 @@ export default function RootLayout({ children }: LayoutProps) {
         </header>
         <main className="grow py-3">{children}</main>
         <footer className="border-t py-3 text-center text-slate-500 text-xs">
-          Game data & images provided by{' '}
-          <a
-            href="http://rawg.io/"
-            target="_blank"
-            className="text-orange-800 hover:underline"
-          >
-            RAWG
-          </a>
+          <div className="flex gap-6 justify-center">
+            <div>
+              Developer:{' '}
+              <a
+                href="https://www.linkedin.com/in/andrewlobban/"
+                target="_blank"
+                className="text-orange-800 hover:underline"
+              >
+                Andrew G Lobban
+              </a>
+            </div>
+            <div>
+              Game data & images provided by{' '}
+              <a
+                href="http://rawg.io/"
+                target="_blank"
+                className="text-orange-800 hover:underline"
+              >
+                RAWG
+              </a>
+            </div>
+          </div>
         </footer>
       </body>
     </html>
