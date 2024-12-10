@@ -40,10 +40,10 @@ export default function SearchBox() {
     }
   }, [debounceQuery]);
 
-  console.log('[SearchBox] query:', { query, debounceQuery });
+  // console.log('[SearchBox] query:', { query, debounceQuery });
 
   const handleChange = (review) => {
-    console.log('[SearchBox] handleChange param:', review);
+    // console.log('[SearchBox] handleChange param:', review);
     router.push(`/reviews/${review?.slug ?? ''}`);
   };
 

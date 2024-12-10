@@ -14,7 +14,7 @@ export async function generateMetadata() {
   } = await getReviews(1);
   const domain = getDomain();
   const imageUrl = new URL(review.image, CMS_URL).href;
-  console.log('[Layout] imageUrl:', imageUrl);
+  // console.log('[Layout] imageUrl:', imageUrl);
 
   return {
     title: {
