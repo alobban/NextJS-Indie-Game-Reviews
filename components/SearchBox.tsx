@@ -17,13 +17,22 @@ export default function SearchBox() {
 
   useEffect(() => {
     if (query.length > 1) {
+      const controller = new AbortController();
       (async () => {
-        const response = await fetch(
-          'api/search?query=' + encodeURIComponent(query)
-        );
-        const reviews = await response.json();
-        setReviews(reviews);
+        try {
+          const url = 'api/search?query=' + encodeURIComponent(query);
+          const response = await fetch(url, { signal: controller.signal });
+          const reviews = await response.json();
+          setReviews(reviews);
+        } catch (error) {
+          if (error.name === 'AbortError') {
+            console.log('aborted successfully: IGNORE');
+          } else {
+            throw error;
+          }
+        }
       })();
+      return () => controller.abort();
     } else {
       setReviews([]);
     }
